@@ -1,2 +1,2 @@
 # lingueeApi
-An Api to get transator results from www.linguee.de
+An Api to get translations from www.linguee.de
