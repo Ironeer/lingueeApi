@@ -131,7 +131,7 @@ public class Translator {
     }
 
     /**
-     Returns the url of the translation
+     Returns the url of the translation.
      @param sourceString    the word to translate
      @param sourceLanguage  the code of the language of the word (use Translate.MYLANGUAGE)
      @param resultLanguage  the code of the language to translate to (use Translate.MYLANGUAGE)
