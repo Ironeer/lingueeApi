@@ -131,7 +131,7 @@ public class Translator {
     }
 
     /**
-     Returns the url of the translation.
+     Returns the url of the translation
      @param sourceString    the word to translate
      @param sourceLanguage  the code of the language of the word (use Translate.MYLANGUAGE)
      @param resultLanguage  the code of the language to translate to (use Translate.MYLANGUAGE)
@@ -150,12 +150,12 @@ public class Translator {
      */
     private static String getUrlSource(String stringUrl) throws IOException {
         //open connection
-        java.net.URL url = new URL(stringUrl);
+        URL url = new URL(stringUrl);
         URLConnection urlConnection = url.openConnection();
 
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
-                urlConnection.getInputStream(), "UTF-8"));
+                urlConnection.getInputStream(), "ISO-8859-1"));
 
         String inputLine;
         StringBuilder a = new StringBuilder();
