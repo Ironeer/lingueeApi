@@ -143,7 +143,7 @@ public class Translator {
 
 
     /**
-     Returns the html Code of the website as a String
+     Returns the html Code of the website as a String.
      @param stringUrl   the url of the website
      @return            the html Code of the website as a String
      @throws                IOException
