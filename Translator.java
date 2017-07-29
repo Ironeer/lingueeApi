@@ -75,6 +75,7 @@ public class Translator {
                 results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%A4","ä"));
                 results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%B6","ö"));
                 results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%BC","ü"));
+                results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%9F","ß"));
                 results.set(results.size()-1, results.get(results.size()-1).replaceAll("[+]"," "));
             }
 
@@ -155,7 +156,7 @@ public class Translator {
     }
 
     /**
-     Returns the url of the translation.
+     Returns the url of the translation
      @param sourceString    the word to translate
      @param sourceLanguage  the code of the language of the word (use Translate.MYLANGUAGE)
      @param resultLanguage  the code of the language to translate to (use Translate.MYLANGUAGE)
