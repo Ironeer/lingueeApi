@@ -137,7 +137,7 @@ public class Translator {
      @param resultLanguage  the code of the language to translate to (use Translate.MYLANGUAGE)
      @return                an String Array containing all traslations, length is 0 when there is no translation
      */
-    public String getTranslationURL(String sourceString, int sourceLanguage, int resultLanguage){
+    public static String getTranslationURL(String sourceString, int sourceLanguage, int resultLanguage){
         return "http://www.linguee.de/"+languages[sourceLanguage]+"-"+languages[resultLanguage]+"/search?source=auto&query="+sourceString;
     }
 
