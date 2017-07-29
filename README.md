@@ -1,5 +1,5 @@
 # lingueeApi
-An Java Api to get translations from www.linguee.de
+A small Java Api to get translations from www.linguee.de
 
 
 Terms and Conditions
