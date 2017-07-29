@@ -8,7 +8,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 
 /**
- * Created by Ironeer on 28/07/2017.
+ * Created by Maximilian Kias on 28/07/2017.
  */
 
 public class Translator {
@@ -20,7 +20,7 @@ public class Translator {
     public static final int Greek = 4;
     public static final int English = 5;
     public static final int Spanish = 6;
-    public static final int Rstonian = 7;
+    public static final int Estonian = 7;
     public static final int Finnish = 8;
     public static final int French = 9;
     public static final int Hungarian = 10;
@@ -46,17 +46,23 @@ public class Translator {
      @param sourceString    the word to translate
      @param sourceLanguage  the code of the language of the word (use Translate.MYLANGUAGE)
      @param resultLanguage  the code of the language to translate to (use Translate.MYLANGUAGE)
-     @return                an String Array containing all traslations
+     @return                an String Array containing all traslations, length is 0 when there is no translation
      @throws                IOException
      */
     public static String[] getTranslations(String sourceString, int sourceLanguage, int resultLanguage) throws IOException {
 
+        //url generation
         String url = "http://www.linguee.de/"+languages[sourceLanguage]+"-"+languages[resultLanguage]+"/search?source=auto&query="+sourceString;
+        //get the html code of the url
         String htmlCode =getUrlSource(url);
+
         ArrayList<String> results = new ArrayList<>();
 
-        htmlCode  = htmlCode.substring(0,htmlCode.indexOf("class='example_lines inexact'"));
+        //if there are examples fom extern sources cut them off
+        if(htmlCode.contains("class='example_lines inexact'"))
+            htmlCode  = htmlCode.substring(0,htmlCode.indexOf("class='example_lines inexact'"));
 
+        //search all translations, modify them and cut off the parts of te html code dealt with
         while(htmlCode.contains("lid='"+languageCodes[resultLanguage]+":")){
             results.add(htmlCode.substring(htmlCode.indexOf("lid='"+languageCodes[resultLanguage]+":")+8,htmlCode.indexOf("'>",htmlCode.indexOf("lid='"+languageCodes[resultLanguage]+":"))));
             results.set(results.size()-1, results.get(results.size()-1).replaceAll("#"," "));
@@ -64,6 +70,7 @@ public class Translator {
             htmlCode = htmlCode.substring(htmlCode.indexOf("'>",htmlCode.indexOf("lid='"+languageCodes[resultLanguage]+":"))+2,htmlCode.length());
         }
 
+        //cast to an array and return it
         String[] resutltArray = new String[results.size()];
         results.toArray(resutltArray);
         return resutltArray;
@@ -74,18 +81,26 @@ public class Translator {
      @param sourceString    the word to translate
      @param sourceLanguage  the code of the language of the word (use Translate.MYLANGUAGE)
      @param resultLanguage  the code of the language to translate to (use Translate.MYLANGUAGE)
-     @return                an String Array containing all traslations
+     @return                an String Array containing all traslations, length is 0 when there is no translation
      @throws                IOException
      */
     public static String[] getTranslationsWithExtras(String sourceString, int sourceLanguage, int resultLanguage) throws IOException {
 
+        //url generation
         String url = "http://www.linguee.de/"+languages[sourceLanguage]+"-"+languages[resultLanguage]+"/search?source=auto&query="+sourceString;
+        //get the html code of the url
         String htmlCode =getUrlSource(url);
+
         ArrayList<String> results = new ArrayList<>();
 
-        htmlCode  = htmlCode.substring(0,htmlCode.indexOf("class='example_lines inexact'"));
+        //if there are examples fom extern sources cut them off
+        if(htmlCode.contains("class='example_lines inexact'"))
+            htmlCode  = htmlCode.substring(0,htmlCode.indexOf("class='example_lines inexact'"));
+
+        //copy for search after extras
         String searchResults = htmlCode;
 
+        //search all translations, modify them and cut off the parts of te html code dealt with
         while(htmlCode.contains("lid='"+languageCodes[resultLanguage]+":")){
             results.add(htmlCode.substring(htmlCode.indexOf("lid='"+languageCodes[resultLanguage]+":")+8,htmlCode.indexOf("'>",htmlCode.indexOf("lid='"+languageCodes[resultLanguage]+":"))));
             results.set(results.size()-1, results.get(results.size()-1).replaceAll("#"," "));
@@ -109,18 +124,43 @@ public class Translator {
             resultCount++;
         }
 
+        //cast to an array and return it
         String[] resutltArray = new String[results.size()];
         results.toArray(resutltArray);
         return resutltArray;
     }
 
+    /**
+     Returns the url of the translation
+     @param sourceString    the word to translate
+     @param sourceLanguage  the code of the language of the word (use Translate.MYLANGUAGE)
+     @param resultLanguage  the code of the language to translate to (use Translate.MYLANGUAGE)
+     @return                an String Array containing all traslations, length is 0 when there is no translation
+     */
+    public String getTranslationURL(String sourceString, int sourceLanguage, int resultLanguage){
+        return "http://www.linguee.de/"+languages[sourceLanguage]+"-"+languages[resultLanguage]+"/search?source=auto&query="+sourceString;
+    }
+
+
+    /**
+     Returns the html Code of the website as a String
+     @param stringUrl   the url of the website
+     @return            the html Code of the website as a String
+     @throws                IOException
+     */
     private static String getUrlSource(String stringUrl) throws IOException {
+        //open connection
         java.net.URL url = new URL(stringUrl);
         URLConnection urlConnection = url.openConnection();
+
+
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
                 urlConnection.getInputStream(), "UTF-8"));
+
         String inputLine;
         StringBuilder a = new StringBuilder();
+
+        //read every line and save it to the string builder
         while ((inputLine = bufferedReader.readLine()) != null)
             a.append(inputLine);
         bufferedReader.close();
