@@ -65,7 +65,20 @@ public class Translator {
         //search all translations, modify them and cut off the parts of te html code dealt with
         while(htmlCode.contains("lid='"+languageCodes[resultLanguage]+":")){
             results.add(htmlCode.substring(htmlCode.indexOf("lid='"+languageCodes[resultLanguage]+":")+8,htmlCode.indexOf("'>",htmlCode.indexOf("lid='"+languageCodes[resultLanguage]+":"))));
-            results.set(results.size()-1, results.get(results.size()-1).replaceAll("#"," "));
+
+            String searchString = "href='/"+languages[resultLanguage]+"-"+languages[sourceLanguage]+"/uebersetzung/";
+
+            //if there are spaces or german letters fix them
+            if(results.get(results.size()-1).contains("#")){
+                results.set(results.size()-1,htmlCode.substring(htmlCode.indexOf(searchString)+searchString.length(),
+                        htmlCode.indexOf(".html",htmlCode.indexOf(searchString))));
+                results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%A4","ä"));
+                results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%B6","ö"));
+                results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%BC","ü"));
+                results.set(results.size()-1, results.get(results.size()-1).replaceAll("[+]"," "));
+            }
+
+            results.set(results.size()-1,results.get(results.size()-1).replaceAll("[0-9]",""));
             results.set(results.size()-1,results.get(results.size()-1).replaceAll("[0-9]",""));
             htmlCode = htmlCode.substring(htmlCode.indexOf("'>",htmlCode.indexOf("lid='"+languageCodes[resultLanguage]+":"))+2,htmlCode.length());
         }
@@ -103,7 +116,18 @@ public class Translator {
         //search all translations, modify them and cut off the parts of te html code dealt with
         while(htmlCode.contains("lid='"+languageCodes[resultLanguage]+":")){
             results.add(htmlCode.substring(htmlCode.indexOf("lid='"+languageCodes[resultLanguage]+":")+8,htmlCode.indexOf("'>",htmlCode.indexOf("lid='"+languageCodes[resultLanguage]+":"))));
-            results.set(results.size()-1, results.get(results.size()-1).replaceAll("#"," "));
+
+            String searchString = "href='/"+languages[resultLanguage]+"-"+languages[sourceLanguage]+"/uebersetzung/";
+
+            //if there are spaces or german letters fix them
+            if(results.get(results.size()-1).contains("#")){
+                results.set(results.size()-1,htmlCode.substring(htmlCode.indexOf(searchString)+searchString.length(),
+                        htmlCode.indexOf(".html",htmlCode.indexOf(searchString))));
+                results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%A4","ä"));
+                results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%B6","ö"));
+                results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%BC","ü"));
+                results.set(results.size()-1, results.get(results.size()-1).replaceAll("[+]"," "));
+            }
             results.set(results.size()-1,results.get(results.size()-1).replaceAll("[0-9]",""));
             htmlCode = htmlCode.substring(htmlCode.indexOf("'>",htmlCode.indexOf("lid='"+languageCodes[resultLanguage]+":"))+2,htmlCode.length());
         }
@@ -131,7 +155,7 @@ public class Translator {
     }
 
     /**
-     Returns the url of the translation.
+     Returns the url of the translation
      @param sourceString    the word to translate
      @param sourceLanguage  the code of the language of the word (use Translate.MYLANGUAGE)
      @param resultLanguage  the code of the language to translate to (use Translate.MYLANGUAGE)
@@ -143,7 +167,7 @@ public class Translator {
 
 
     /**
-     Returns the html Code of the website as a String.
+     Returns the html Code of the website as a String
      @param stringUrl   the url of the website
      @return            the html Code of the website as a String
      @throws                IOException
