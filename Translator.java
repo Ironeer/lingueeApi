@@ -128,6 +128,7 @@ public class Translator {
                 results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%B6","ö"));
                 results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%BC","ü"));
                 results.set(results.size()-1, results.get(results.size()-1).replaceAll("[+]"," "));
+                results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%9F","ß"));
             }
             results.set(results.size()-1,results.get(results.size()-1).replaceAll("[0-9]",""));
             htmlCode = htmlCode.substring(htmlCode.indexOf("'>",htmlCode.indexOf("lid='"+languageCodes[resultLanguage]+":"))+2,htmlCode.length());
