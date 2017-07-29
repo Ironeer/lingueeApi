@@ -1,6 +1,10 @@
 # lingueeApi
 A small Java Api to get translations from www.linguee.de
 
+Implementation
+--------------
+Just copy Translator.java and use its methods.
+View the example for additional explanations.
 
 Terms and Conditions
 --------------------
