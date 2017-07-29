@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
 /**
- * Created by maxim on 28/07/2017.
+ * Created by Maximilian Kias on 28/07/2017.
  */
 
 public class Example {
