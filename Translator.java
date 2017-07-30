@@ -51,6 +51,8 @@ public class Translator {
      */
     public static String[] getTranslations(String sourceString, int sourceLanguage, int resultLanguage) throws IOException {
 
+        sourceString = replaceChars(sourceString);
+
         //url generation
         String url = "http://www.linguee.de/"+languages[sourceLanguage]+"-"+languages[resultLanguage]+"/search?source=auto&query="+sourceString;
         //get the html code of the url
@@ -72,11 +74,8 @@ public class Translator {
             if(results.get(results.size()-1).contains("#")){
                 results.set(results.size()-1,htmlCode.substring(htmlCode.indexOf(searchString)+searchString.length(),
                         htmlCode.indexOf(".html",htmlCode.indexOf(searchString))));
-                results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%A4","ä"));
-                results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%B6","ö"));
-                results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%BC","ü"));
-                results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%9F","ß"));
-                results.set(results.size()-1, results.get(results.size()-1).replaceAll("[+]"," "));
+
+                results = replaceChars(results);
             }
 
             results.set(results.size()-1,results.get(results.size()-1).replaceAll("[0-9]",""));
@@ -99,6 +98,8 @@ public class Translator {
      @throws                IOException
      */
     public static String[] getTranslationsWithExtras(String sourceString, int sourceLanguage, int resultLanguage) throws IOException {
+
+        sourceString = replaceChars(sourceString);
 
         //url generation
         String url = "http://www.linguee.de/"+languages[sourceLanguage]+"-"+languages[resultLanguage]+"/search?source=auto&query="+sourceString;
@@ -124,18 +125,16 @@ public class Translator {
             if(results.get(results.size()-1).contains("#")){
                 results.set(results.size()-1,htmlCode.substring(htmlCode.indexOf(searchString)+searchString.length(),
                         htmlCode.indexOf(".html",htmlCode.indexOf(searchString))));
-                results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%A4","ä"));
-                results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%B6","ö"));
-                results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%BC","ü"));
-                results.set(results.size()-1, results.get(results.size()-1).replaceAll("[+]"," "));
-                results.set(results.size()-1, results.get(results.size()-1).replaceAll("%C3%9F","ß"));
+
+                results = replaceChars(results);
+
             }
             results.set(results.size()-1,results.get(results.size()-1).replaceAll("[0-9]",""));
             htmlCode = htmlCode.substring(htmlCode.indexOf("'>",htmlCode.indexOf("lid='"+languageCodes[resultLanguage]+":"))+2,htmlCode.length());
         }
 
         int resultCount = 0;
-        while(searchResults.contains("class='tag_type' title='")) {
+        while(searchResults.contains("class='tag_type' title='") && resultCount<results.size()) {
 
             String extra = searchResults.substring(searchResults.indexOf("class='tag_type' title='") + 24, searchResults.indexOf("'>", searchResults.indexOf("class='tag_type' title='")));
             extra = extra.replaceAll("&nbsp;", " ");
@@ -164,6 +163,8 @@ public class Translator {
      @return                an String Array containing all traslations, length is 0 when there is no translation
      */
     public static String getTranslationURL(String sourceString, int sourceLanguage, int resultLanguage){
+        sourceString = replaceChars(sourceString);
+
         return "http://www.linguee.de/"+languages[sourceLanguage]+"-"+languages[resultLanguage]+"/search?source=auto&query="+sourceString;
     }
 
@@ -193,4 +194,64 @@ public class Translator {
 
         return a.toString();
     }
+
+    /**
+     Returns the list with replaced missing letter
+     @param results   the list
+     @return            the list with replaced missing letter
+     */
+    private static ArrayList<String> replaceChars(ArrayList<String> results) {
+        results.set(results.size() - 1, results.get(results.size() - 1).replaceAll("%C3%A0", "à"));
+        results.set(results.size() - 1, results.get(results.size() - 1).replaceAll("%C3%A1", "á"));
+        results.set(results.size() - 1, results.get(results.size() - 1).replaceAll("%C3%A2", "â"));
+        results.set(results.size() - 1, results.get(results.size() - 1).replaceAll("%C3%A4", "ä"));
+        results.set(results.size() - 1, results.get(results.size() - 1).replaceAll("%C3%A5", "å"));
+        results.set(results.size() - 1, results.get(results.size() - 1).replaceAll("%C3%A6", "æ"));
+
+        results.set(results.size() - 1, results.get(results.size() - 1).replaceAll("%C3%A7", "ç"));
+
+        results.set(results.size() - 1, results.get(results.size() - 1).replaceAll("%C3%A8", "è"));
+        results.set(results.size() - 1, results.get(results.size() - 1).replaceAll("%C3%A9", "é"));
+        results.set(results.size() - 1, results.get(results.size() - 1).replaceAll("%C3%aa", "ê"));
+
+        results.set(results.size() - 1, results.get(results.size() - 1).replaceAll("%C3%B9", "ù"));
+        results.set(results.size() - 1, results.get(results.size() - 1).replaceAll("%C3%BA", "ú"));
+        results.set(results.size() - 1, results.get(results.size() - 1).replaceAll("%C3%BB", "û"));
+        results.set(results.size() - 1, results.get(results.size() - 1).replaceAll("%C3%BC", "ü"));
+
+        results.set(results.size() - 1, results.get(results.size() - 1).replaceAll("%C3%B6", "ö"));
+
+        results.set(results.size() - 1, results.get(results.size() - 1).replaceAll("%C3%9F", "ß"));
+        results.set(results.size() - 1, results.get(results.size() - 1).replaceAll("[+]", " "));
+        return results;
+    }
+
+    /**
+     Returns the string with replaced missing letter
+     @param sourceString   the string
+     @return            the string with replaced missing letter
+     */
+    private static String replaceChars(String sourceString){
+        sourceString = sourceString.replaceAll(" ","[+]");
+
+        sourceString = sourceString.replaceAll("à","%C3%A0");
+        sourceString = sourceString.replaceAll("á","%C3%A1");
+        sourceString = sourceString.replaceAll("â","%C3%A2");
+        sourceString = sourceString.replaceAll("ä","%C3%A4");
+        sourceString = sourceString.replaceAll("å","%C3%A5");
+        sourceString = sourceString.replaceAll("æ","%C3%A6");
+        sourceString = sourceString.replaceAll("ç","%C3%A7");
+        sourceString = sourceString.replaceAll("è","%C3%A8");
+        sourceString = sourceString.replaceAll("é","%C3%A9");
+        sourceString = sourceString.replaceAll("ê","%C3%aa");
+        sourceString = sourceString.replaceAll("ù","%C3%B9");
+        sourceString = sourceString.replaceAll("ú","%C3%BA");
+        sourceString = sourceString.replaceAll("û","%C3%BB");
+        sourceString = sourceString.replaceAll("ü","%C3%BC");
+        sourceString = sourceString.replaceAll("ö","%C3%B6");
+        sourceString = sourceString.replaceAll("ß","%C3%9F");
+
+        return sourceString;
+    }
+
 }
