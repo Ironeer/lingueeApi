@@ -54,7 +54,7 @@ public class Translator {
         sourceString = replaceChars(sourceString);
 
         //url generation
-        String url = "http://www.linguee.de/"+languages[sourceLanguage]+"-"+languages[resultLanguage]+"/search?source=auto&query="+sourceString;
+        String url = "https://www.linguee.de/"+languages[sourceLanguage]+"-"+languages[resultLanguage]+"/search?source=auto&query="+sourceString;
         //get the html code of the url
         String htmlCode =getUrlSource(url);
 
@@ -102,7 +102,7 @@ public class Translator {
         sourceString = replaceChars(sourceString);
 
         //url generation
-        String url = "http://www.linguee.de/"+languages[sourceLanguage]+"-"+languages[resultLanguage]+"/search?source=auto&query="+sourceString;
+        String url = "https://www.linguee.de/"+languages[sourceLanguage]+"-"+languages[resultLanguage]+"/search?source=auto&query="+sourceString;
         //get the html code of the url
         String htmlCode =getUrlSource(url);
 
@@ -165,7 +165,7 @@ public class Translator {
     public static String getTranslationURL(String sourceString, int sourceLanguage, int resultLanguage){
         sourceString = replaceChars(sourceString);
 
-        return "http://www.linguee.de/"+languages[sourceLanguage]+"-"+languages[resultLanguage]+"/search?source=auto&query="+sourceString;
+        return "https://www.linguee.de/"+languages[sourceLanguage]+"-"+languages[resultLanguage]+"/search?source=auto&query="+sourceString;
     }
 
 
